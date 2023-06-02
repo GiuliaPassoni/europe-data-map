@@ -1,5 +1,5 @@
 import {csv} from "d3"
-import D3Component from "./D3Component.tsx";
+import D3BarChart from "./D3BarChart.tsx";
 
 export default function Main(){
     // let testCsvLoad = csv("/mockData/eu-gdp-19-05-23.csv", function(data) {
@@ -12,7 +12,7 @@ export default function Main(){
             <>
                 {/*{{testCsvLoad}}*/}
                 <p>hi</p>
-                <D3Component/>
+                <D3BarChart/>
             </>
         )
 }
