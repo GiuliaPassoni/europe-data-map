@@ -15,19 +15,19 @@ const width = window.innerWidth
 const height = window.innerHeight
 
 const populationData: Array<number> = []
-for(let i in hardcodedData){
-    populationData.push(hardcodedData[i].gdp*10)
+for (let i in hardcodedData) {
+    populationData.push(hardcodedData[i].gdp * 10)
 }
 console.log(populationData)
 
 const populationDataCoords: number[][] = [] //this is a multidim array
-for(let i in hardcodedData){
-    populationDataCoords.push([hardcodedData[i].population, i*10])
+for (let i in hardcodedData) {
+    populationDataCoords.push([hardcodedData[i].population, i * 10])
 }
 console.log(populationDataCoords)
 
 
-function buildGraph(myRef, data:number[]) {
+function buildGraph(myRef, data: number[]) {
     const scaleFactor = 10, barHeight = 200;
 
     const graph = select(myRef)
@@ -37,26 +37,37 @@ function buildGraph(myRef, data:number[]) {
     const bar = graph.selectAll("g")
         .data(data)
         .join('g')
-        .attr("transform", function(d, i) {
+        .attr("transform", function (d, i) {
             return "translate(" + i * barHeight + ",0)";
         });
 
     bar.append("rect")
-        .attr("height", function(d) {
+        .attr('x', (d: number) => {
+            return d * 10
+        })
+        .attr('y', (d: number) => {
+            return height/4 - d * 10 //SVG coords have +ve Y downwards - this way, we reverse the graph to start at 1/4 of the svg height
+        })
+        .attr("height", function (d) {
             return d * scaleFactor;
         })
         .attr("width", barHeight - 1)
-        .attr('fill', 'white');
+        .attr('fill', 'blue');
 
     bar.append("text")
-        .attr("y", function(d) { return (d); })
+        .attr("y", function (d) {
+            return (d * 3);
+        })
         .attr("x", barHeight)
         .attr("dy", ".25em")
-        .text(function(d) { return d; });
+        .text(function (d) {
+            return d;
+        });
 
     console.log('end')
 
 }
+
 // export default function D3code({}: IProps){
 export default function D3Component() {
     // const svgRef = useRef<SVGSVGElement | null>(null)
