@@ -1,5 +1,8 @@
 import {select} from "d3";
 
+export function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 export function initialiseSvg(anchorElementName: string,
                                       svgId: string,
                                       // svgRef: React.MutableRefObject<SVGSVGElement | null>,
