@@ -31,13 +31,13 @@ export function d3lineChart(myRef:SVGSVGElement | null,width: number, height: nu
         .y(function(d) { return y(d[1]); })
         .curve(curveMonotoneX)
 
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("transform", "translate(" + 100 + "," + 100 + ")")
-        .attr("d", myline)
-        .style("fill", "none")
-        .style("stroke", "#CC0000")
-        .style("stroke-width", "2");
+    // svg.append("path")
+    //     .datum(data)
+    //     .attr("class", "line")
+    //     .attr("transform", "translate(" + 100 + "," + 100 + ")")
+    //     .attr("d", myline)
+    //     .style("fill", "none")
+    //     .style("stroke", "#CC0000")
+    //     .style("stroke-width", "2");
 
 }

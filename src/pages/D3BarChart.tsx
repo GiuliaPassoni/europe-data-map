@@ -1,12 +1,12 @@
 // @ts-ignore
 import React, {useEffect, useRef} from "react";
 import {line, select, Selection, svg} from "d3";
-// import initialiseSvg from "../utils/d3code.tsx";
-import {hardcodedData} from "./../mockData/hardcodedData.tsx";
+// import initialiseSvg from "../utils/d3code.ts";
+import {hardcodedData} from "../mockData/hardcodedData";
 
-import {randomIntFromInterval} from "../utils/d3code.tsx";
-import {buildBarChart} from "../utils/d3barChart.tsx";
-import {d3lineChart} from "../utils/d3lineChart.tsx";
+import {randomIntFromInterval} from "../utils/d3code";
+import {buildBarChart} from "../utils/d3barChart";
+import {d3lineChart} from "../utils/d3lineChart";
 
 const width = window.innerWidth
 const height = window.innerHeight
