@@ -1,6 +1,6 @@
 import {select} from "d3";
 
-export function buildBarChart(myRef:SVGSVGElement | null,width: number, height: number, data: number[]) {
+export function d3barChart(myRef:SVGSVGElement | null,width: number, height: number, data: number[]) {
     const scaleFactor = 10, barHeight = 200, barWidth=barHeight/2
 
     const graph = select(myRef)
