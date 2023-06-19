@@ -14,8 +14,9 @@ export function LinePlot(){
     const svgRef = useRef<SVGSVGElement | null>(null)
 
     useEffect(() => {
+        console.log(gdpLineData)
         d3lineChart(svgRef.current,width, height, gdpLineData)
-    })
+    }, [gdpLineData])
     return(
         <>
             <h1>Line Plot</h1>
