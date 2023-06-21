@@ -1,7 +1,7 @@
 import {select} from "d3";
 
 export function d3barChart(myRef:SVGSVGElement | null,width: number, height: number, data: number[]) {
-    const scaleFactor = 10, barHeight = 200, barWidth=barHeight/2
+    const scaleFactor = 10, barHeight = height/5, barWidth=barHeight/2
 
     const graph = select(myRef)
         .attr("width", width)
@@ -13,10 +13,10 @@ export function d3barChart(myRef:SVGSVGElement | null,width: number, height: num
 
     bar.append("rect")
         .attr('x', (d: number, i:number) => {
-            return width/4+ i*barHeight
+            return width/8+ i*barHeight
         })
         .attr('y', (d: number) => {
-            return height/4 - d * 10 //SVG coords have +ve Y downwards - this way, we reverse the graph to start at 1/4 of the svg height
+            return height/8 - d * 10 //SVG coords have +ve Y downwards - this way, we reverse the graph to start at 1/4 of the svg height
         })
         .attr("height", function (d) {
             return d * scaleFactor;
@@ -25,7 +25,7 @@ export function d3barChart(myRef:SVGSVGElement | null,width: number, height: num
         .attr('fill', 'blue');
 
     bar.append("text")
-        .attr("x", function(d,i) { return (width/4+barWidth/2+ i*barHeight); })
+        .attr("x", function(d,i) { return (width/8+barWidth/4+ i*barHeight); })
         .attr("y", barHeight / 2)
         .attr("dy", ".35em")
         .text(function (d) {

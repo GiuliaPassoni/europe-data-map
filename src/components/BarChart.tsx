@@ -13,7 +13,7 @@ export function BarChart(){
     const svgRef = useRef<SVGSVGElement | null>(null)
 
     useEffect(() => {
-        d3barChart(svgRef.current,width, height, gdpBarData)
+        d3barChart(svgRef.current,500, 500, gdpBarData)
     }, [gdpBarData])
     return(
         <>
