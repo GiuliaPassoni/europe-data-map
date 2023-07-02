@@ -1,6 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import {initialiseSvg} from "../utils/calcs";
+import {hardcodedData} from "../data/hardcodedData";
+import {d3ScatterPlot} from "../utils/d3ScatterPlot";
 
+const countryLifeSpanData: number[][] = []
+for(let i=0; i<hardcodedData.length;i++){
+    countryLifeSpanData.push([i+1, hardcodedData[i]["averageLifespan"]])
+}
+console.log(countryLifeSpanData)
 
 export function ScatterPlot(){
     const svgRef = useRef<SVGSVGElement | null>(null)
@@ -9,8 +16,9 @@ export function ScatterPlot(){
     useEffect(()=>{
         if(!initialised){
             initialised = true
-            let svg = initialiseSvg('#scatterPlotSvgContainer', 'scatterPlotSvg', svgRef.current, 500, 500)
-            svg.attr('style', 'border: 2px solid red')
+
+            // svg.attr('style', 'border: 2px solid red')
+            d3ScatterPlot(svgRef.current, 800,500,countryLifeSpanData)
         }
     },[initialised])
     return (
