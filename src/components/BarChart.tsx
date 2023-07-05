@@ -7,18 +7,22 @@ const height = window.innerHeight
 
 const gdpBarData: Array<number> = []
 for (let i in hardcodedData) {
-    gdpBarData.push(hardcodedData[i].gdp * 10)
+    gdpBarData.push(hardcodedData[i].gdp)
 }
 export function BarChart(){
     const svgRef = useRef<SVGSVGElement | null>(null)
+    let initialised: Boolean = false
 
     useEffect(() => {
-        d3barChart(svgRef.current,500, 500, gdpBarData)
-    }, [gdpBarData])
+    if(!initialised) {
+        initialised = true
+        d3barChart(svgRef.current, 800, 200, gdpBarData)
+    }
+    },[initialised])
     return(
         <>
             <h1>Bar Chart</h1>
-            <svg ref={svgRef}></svg>
+            <div id='barChartSvgContainer'></div>
         </>
     )
 }
