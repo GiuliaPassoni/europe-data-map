@@ -16,9 +16,7 @@ export function ScatterPlot(){
     useEffect(()=>{
         if(!initialised){
             initialised = true
-
-            // svg.attr('style', 'border: 2px solid red')
-            d3ScatterPlot(svgRef.current, 800,500,countryLifeSpanData)
+            d3ScatterPlot(svgRef.current, 800,500, countryLifeSpanData)
         }
     },[initialised])
     return (
