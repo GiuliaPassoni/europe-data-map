@@ -1,56 +1,66 @@
-import {axisBottom, axisLeft, scaleLinear, select} from "d3";
+import {axisBottom, axisLeft, max, scaleBand, scaleLinear, select} from "d3";
 import {initialiseSvg} from "./calcs";
 
-export function d3barChart(myRef:SVGSVGElement | null,width: number, height: number, data: number[]) {
+interface gdpByCountry {
+    countryName: string;
+    gdp: number;
+}
+export function d3barChart(myRef:SVGSVGElement | null,width: number, height: number, data: gdpByCountry[]) {
     const margin = { top: 0, right: 0, bottom: 20, left: 0 };
-    width = width - margin.left - margin.right;
-    height = height - margin.top - margin.bottom;
-
-    const scaleFactor = 100, barHeight = height/5, barWidth=barHeight/2
+    // const values = data.map((country, gdp)=>{ return gdp})
 
     let svg = initialiseSvg('#barChartSvgContainer', 'barChartSvg', myRef, width, height)
     svg.attr('style', 'background: aliceblue; margin-bottom: 20px; border: 2px solid red;')
 
     // Add X axis
-    const x = scaleLinear().domain([0, 5]).range([0, width/2]);
-    const xAxis = svg
-        .append("g")
-        .attr("transform", `translate(${width/4}, ${3*height/4})`)
-        .call(axisBottom(x));
+    const x = scaleBand()
+        .domain(data.map(d => d.countryName))
+        .range([margin.left, width - margin.right])
+        .padding(0.1)
+    const xAxis = ((g:any) => {
+        g
+            .attr("transform", `translate(0,${height - margin.bottom})`)
+            .call(axisBottom(x).tickSizeOuter(0))
+    })
 
     // Add Y axis
-    const y = scaleLinear().domain([0, 5]).range([3*height/4, 0]);
-    svg.append("g")
-        .attr("transform", `translate(${width/4}, 0)`)
-        .call(axisLeft(y));
+    const y = scaleLinear()
+        .domain([0, Math.max(...data.map(({ gdp }) => gdp))])
+        // .domain([0, max(data, d => d.gdp)]).nice()
+        .range([height - margin.bottom, margin.top])
 
-    // const graph = select(myRef)
-    //     .attr("width", width)
-    //     .attr("height", barHeight * data.length);
-    //
-    const bar = svg.append("g")
+    const yAxis = ((g:any) => {
+        g
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(axisLeft(y))
+        // to remove the vertical axis line:
+        .call((g:any) => {
+            g.select(".domain").remove()})})
+
+    function parsedX(item: string) : number {
+        const r = x(item)
+        if (r === undefined)
+            return 0
+        else {
+            return r
+        }
+    }
+    svg.append("g")
+        .attr("class", "bars")
+        .attr("fill", "steelblue")
         .selectAll("rect")
         .data(data)
-        .join('rect')
-        .attr('x', (d: number, i:number) => {
-            return width/8+ i*barHeight
-        })
-        .attr("transform", `translate(${width/4}, 0)`)
-        .attr('y', (d: number) => {
-            return height/8 - d * 10 //SVG coords have +ve Y downwards - this way, we reverse the graph to start at 1/4 of the svg height
-        })
-        .attr("transform", `translate(0, ${height*5/8})`)
-        .attr("height", function (d) {
-            return d * scaleFactor;
-        })
-        .attr("width", barWidth)
-        .attr('fill', 'blue');
+        .join("rect")
+        .attr("x", d => parsedX(d.countryName))
+        .attr("y", d => y(d.gdp))
+        .attr("height", d => y(0) - y(d.gdp))
+        .attr("width", x.bandwidth());
 
-    bar.append("text")
-        .attr("x", function(d,i) { return (width/8+barWidth/4+ i*barHeight); })
-        .attr("y", barHeight / 2)
-        .attr("dy", ".35em")
-        .text(function (d) {
-            return d;
-        });
-}
+    svg.append("g")
+        .attr("class", "x-axis")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis);
+    }
