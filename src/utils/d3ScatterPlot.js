@@ -1,7 +1,7 @@
 import {axisBottom, axisLeft, scaleLinear} from "d3";
 import {initialiseSvg} from "./calcs";
 
-export function d3ScatterPlot(svgRef: any, width:number, height: number, dataset: number[][]){
+export function d3ScatterPlot(svgRef, width, height, dataset){
     let svg = initialiseSvg('#scatterPlotSvgContainer', 'scatterPlotSvg', svgRef, width, height)
     svg.attr('style', 'background: aliceblue; margin-bottom: 20px')
 

@@ -5,11 +5,7 @@ import {d3barChart} from "../utils/d3BarChart";
 const width = window.innerWidth
 const height = window.innerHeight
 
-interface gdpByCountry {
-    countryName: string;
-    gdp: number;
-}
-let gdpData: gdpByCountry[] = []
+let gdpData = []
 for (let i in hardcodedData) {
     gdpData.push({
         countryName: hardcodedData[i].countryName,
@@ -17,13 +13,13 @@ for (let i in hardcodedData) {
     })
 }
 export function BarChart(){
-    const svgRef = useRef<SVGSVGElement | null>(null)
-    let initialised: Boolean = false
+    const svgRef = useRef(null)
+    let initialised = false
 
     useEffect(() => {
     if(!initialised) {
         initialised = true
-        d3barChart(svgRef.current, 800, 200, gdpData)
+        d3barChart(svgRef.current, 800, 500, gdpData)
     }
     },[initialised])
     return(

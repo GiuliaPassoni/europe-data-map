@@ -11,8 +11,8 @@ const xAxisDimensions = {
     range: [10,290]
 }
 export function DRAFTReusableChart(){
-    const svgRef = useRef<SVGSVGElement | null>(null)
-    let initialised: Boolean = false
+    const svgRef = useRef(null)
+    let initialised = false
 
     useEffect(() => {
         if(!initialised) {

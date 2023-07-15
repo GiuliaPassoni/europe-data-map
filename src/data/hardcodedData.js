@@ -1,13 +1,4 @@
-interface ICountry {
-    countryName: string,
-    gdp: number,
-    population: number,
-    averageLifespan: number,
-    birthsPerYear: number,
-    eurovisionWins: number
-}
-
-export const hardcodedData: ICountry[] = [
+export const hardcodedData = [
     {
         countryName: 'country1',
         gdp: 0.4,

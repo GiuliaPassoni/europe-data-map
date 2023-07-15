@@ -1,10 +1,10 @@
 import {select} from "d3";
 import React from "react";
 
-export function randomIntFromInterval(min: number, max: number) { // min and max included
+export function randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
-export function initialiseSvg(anchorElementName: string, svgId: string, svgRef: any, width: number, height: number) {
+export function initialiseSvg(anchorElementName, svgId, svgRef, width, height) {
     return select(anchorElementName)
         .append('svg')
         .attr('id', svgId)
@@ -14,7 +14,7 @@ export function initialiseSvg(anchorElementName: string, svgId: string, svgRef: 
 }
 
 //for now, ref will have to be assigned separately, upon initialisation
-export function drawGraph(svgRef: React.MutableRefObject<SVGSVGElement | null>) {
+export function drawGraph(svgRef) {
     select(svgRef.current).append('rect')
         .attr('x', 0)
         .attr('y', 100)

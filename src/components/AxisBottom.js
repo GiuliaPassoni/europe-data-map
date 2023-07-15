@@ -1,11 +1,7 @@
 import React, {useMemo} from "react";
 import {scaleLinear} from "d3";
 
-interface xAxis {
-    domain: number[]
-    range: number[]
-}
-export function AxisBottom(xDimensions: xAxis){
+export function AxisBottom(xDimensions){
     let domain = xDimensions.domain, range = xDimensions.range
     const ticks = useMemo(() => {
         const xScale = scaleLinear()

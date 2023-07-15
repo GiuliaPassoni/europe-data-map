@@ -6,12 +6,12 @@ import {d3lineChart} from "../utils/d3LinePlot";
 const width = window.innerWidth
 const height = window.innerHeight
 
-const gdpLineData: number[][] = []
+const gdpLineData = []
 for (let i in hardcodedData) {
     gdpLineData.push([hardcodedData[i].gdp, randomIntFromInterval(1,10)])
 }
 export function LinePlot(){
-    const svgRef = useRef<SVGSVGElement | null>(null)
+    const svgRef = useRef(null)
 
     useEffect(() => {
         console.log(gdpLineData)

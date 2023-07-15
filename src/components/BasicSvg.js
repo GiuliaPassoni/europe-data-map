@@ -1,12 +1,9 @@
 import React, {useEffect, useRef} from "react";
 import {initialiseSvg} from "../utils/calcs";
 
-interface svgParams {
-    svgId: string
-}
-export function BasicSvg(params: svgParams){
-    let initialised: Boolean = false
-    let mySvgRef = useRef<SVGSVGElement | null>(null)
+export function BasicSvg(params){
+    let initialised = false
+    let mySvgRef = useRef(null)
 
     useEffect(()=>{
         if(!initialised){

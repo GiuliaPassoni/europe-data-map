@@ -1,11 +1,6 @@
 import {axisBottom, axisLeft, max, scaleBand, scaleLinear, select} from "d3";
 import {initialiseSvg} from "./calcs";
-
-interface gdpByCountry {
-    countryName: string;
-    gdp: number;
-}
-export function d3barChart(myRef:SVGSVGElement | null,width: number, height: number, data: gdpByCountry[]) {
+export function d3barChart(myRef,width, height, data) {
     const margin = { top: 0, right: 0, bottom: 20, left: 0 };
     // const values = data.map((country, gdp)=>{ return gdp})
 
@@ -17,7 +12,7 @@ export function d3barChart(myRef:SVGSVGElement | null,width: number, height: num
         .domain(data.map(d => d.countryName))
         .range([margin.left, width - margin.right])
         .padding(0.1)
-    const xAxis = ((g:any) => {
+    const xAxis = ((g) => {
         g
             .attr("transform", `translate(0,${height - margin.bottom})`)
             .call(axisBottom(x).tickSizeOuter(0))
@@ -29,15 +24,15 @@ export function d3barChart(myRef:SVGSVGElement | null,width: number, height: num
         // .domain([0, max(data, d => d.gdp)]).nice()
         .range([height - margin.bottom, margin.top])
 
-    const yAxis = ((g:any) => {
+    const yAxis = ((g) => {
         g
         .attr("transform", `translate(${margin.left},0)`)
         .call(axisLeft(y))
         // to remove the vertical axis line:
-        .call((g:any) => {
+        .call((g) => {
             g.select(".domain").remove()})})
 
-    function parsedX(item: string) : number {
+    function parsedX(item) {
         const r = x(item)
         if (r === undefined)
             return 0
