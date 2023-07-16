@@ -7,7 +7,6 @@ const countryLifeSpanData = []
 for(let i=0; i<hardcodedData.length;i++){
     countryLifeSpanData.push([i+1, hardcodedData[i]["averageLifespan"]])
 }
-console.log(countryLifeSpanData)
 
 export function ScatterPlot(){
     const svgRef = useRef(null)
