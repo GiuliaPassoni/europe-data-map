@@ -12,6 +12,8 @@ for (let i in hardcodedData) {
         gdp: hardcodedData[i].gdp
     })
 }
+
+const margin = {top: 20, right: 0, bottom: 30, left: 40};
 export function BarChart(){
     const svgRef = useRef(null)
     let initialised = false
@@ -19,7 +21,7 @@ export function BarChart(){
     useEffect(() => {
     if(!initialised) {
         initialised = true
-        d3barChart(svgRef.current, 800, 500, gdpData)
+        d3barChart(svgRef.current, 800, 500, gdpData, margin)
     }
     },[initialised])
     return(

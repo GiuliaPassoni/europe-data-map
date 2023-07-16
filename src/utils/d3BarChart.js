@@ -1,9 +1,6 @@
-import {axisBottom, axisLeft, max, scaleBand, scaleLinear, select} from "d3";
+import {axisBottom, axisLeft, max, scaleBand, scaleLinear} from "d3";
 import {initialiseSvg} from "./calcs";
-export function d3barChart(myRef,width, height, data) {
-    const margin = { top: 0, right: 0, bottom: 20, left: 0 };
-    // const values = data.map((country, gdp)=>{ return gdp})
-
+export function d3barChart(myRef,width, height, data, margin) {
     let svg = initialiseSvg('#barChartSvgContainer', 'barChartSvg', myRef, width, height)
     svg.attr('style', 'background: aliceblue; margin-bottom: 20px; border: 2px solid red;')
 
