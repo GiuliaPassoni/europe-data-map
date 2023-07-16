@@ -1,7 +1,11 @@
+import {randomArray} from "../utils/calcs";
+export const randomYears = [1995, 1996, 1997, 1998, 1999]
+
 export const hardcodedData = [
     {
         countryName: 'country1',
         gdp: 0.4,
+        gdp5yearTrend: randomArray(-0.3,1.2, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 10000000,
         averageLifespan: 99,
         birthsPerYear: 3000,
@@ -9,6 +13,7 @@ export const hardcodedData = [
     },{
         countryName: 'country2',
         gdp: 0.1,
+        gdp5yearTrend: randomArray(1,2.5, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 50000000,
         averageLifespan: 86,
         birthsPerYear: 6000,
@@ -16,6 +21,7 @@ export const hardcodedData = [
     },{
         countryName: 'country3',
         gdp: 0.2,
+        gdp5yearTrend: randomArray(.8,2.6, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 2000000,
         averageLifespan: 79,
         birthsPerYear: 20000,
@@ -23,6 +29,7 @@ export const hardcodedData = [
     },{
         countryName: 'country4',
         gdp: -1.0,
+        gdp5yearTrend: randomArray(1.2,3.3, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 500000,
         averageLifespan: 81,
         birthsPerYear: 7500,
@@ -30,6 +37,7 @@ export const hardcodedData = [
     },{
         countryName: 'country5',
         gdp: 1.1,
+        gdp5yearTrend: randomArray(-.6,0.2, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 100000000,
         averageLifespan: 80,
         birthsPerYear: 2900,
