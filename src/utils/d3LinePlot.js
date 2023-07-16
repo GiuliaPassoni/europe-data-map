@@ -1,12 +1,4 @@
-import {
-    axisBottom,
-    axisLeft,
-    extent,
-    scaleLinear,
-    select,
-    line,
-    curveLinear
-} from "d3";
+import {axisBottom, axisLeft, curveLinear, line, scaleLinear, select, extent} from "d3";
 
 export function d3lineChart(myRef, width, height, margin, data) {
     const svg = select(myRef)
@@ -18,8 +10,7 @@ export function d3lineChart(myRef, width, height, margin, data) {
             "translate(" + margin.left + "," + margin.top + ")")
 
     const x = scaleLinear()
-        // .domain(extent(data, function(d) { return d[0]})) //TODO: make d3.extent work to make the code below shorter
-        .domain([Math.min(...data.map((d)=>d[0])), Math.max(...data.map((d)=>d[0]))])
+        .domain(extent(data, function(d) { return d[0]}))
         .range([0, width - margin.right])
 
     function xAxis(g){
@@ -29,7 +20,7 @@ export function d3lineChart(myRef, width, height, margin, data) {
     }
 
     const y  = scaleLinear()
-        .domain([0, Math.max(...data.map((d)=>d[1]))])
+        .domain(extent(data, function(d) { return d[1]}))
         .range([height - margin.bottom, margin.top]) // it's inverted bc we always start from top left, then going downwards
 
     function yAxis(g){
