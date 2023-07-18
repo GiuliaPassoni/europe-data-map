@@ -10,7 +10,6 @@ let gdp5years = hardcodedData.map((i)=> ({
     countryName: i["countryName"],
     gdp5yearsData: i["gdp5yearTrend"]
 })) //data already sorted by year
-console.log('gdp5years', gdp5years)
 
 const margin = {top: 10, right: 30, bottom: 30, left: 60}
 
