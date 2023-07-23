@@ -22,6 +22,31 @@ export function sortDataPointsByX(unsortedData){
     return unsortedData.sort(function(a, b){ return ascending(a[0], b[0]); })
 }
 
+export function fullAxisDomain(dataSet, datasetSubset, subsetValue){
+    let fullDomain = []
+    for (let i=0; i < dataSet.length; i++) {
+        let item = dataSet[i][datasetSubset]
+        for (let j=0; j<item.length; j++) {
+            fullDomain.push(item[j][subsetValue])
+        }
+    }
+    return fullDomain
+}
+
+export function domainMinAndMax(fullDomain){
+    let min = Infinity;
+    let max = -Infinity;
+    for (let i=0; i < fullDomain.length; i++) {
+            if (fullDomain[i] < min) {
+                min = fullDomain[i]
+            }
+            if (fullDomain[i] > max) {
+                max = fullDomain[i]
+            }
+    }
+    return [min, max]
+}
+
 export function initialiseSvg(anchorElementName, svgId, svgRef, width, height) {
     return select(anchorElementName)
         .append('svg')

@@ -14,42 +14,29 @@ import {
     schemeCategory10,
     max
 } from "d3";
+import {domainMinAndMax, domainWithMinAndMax, fullAxisDomain} from "./calcs";
 
 export function d3MultiLineChart(myRef, width, height, margin, data, variableName) {
 
-    // TODO: adjust for multiline data
+    // create basic svg
     const svg = select(myRef)
         .attr("width", width)
         .attr("height", height)
-        .attr("background", '#d3d3d3')
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")")
 
-    console.log(data)
+    // Axis logic
+    const fullXDomain = fullAxisDomain(data, 'gdp5yearsData', 'year')
+    const [minX, maxX] = domainMinAndMax(fullXDomain)
     const xScale = scaleLinear()
-        .domain(extent(data[0].gdp5yearsData, d => d.year))
+        .domain(extent(data[0].gdp5yearsData, d => d.year)) //this here works, because the X values are the same for all entries. But that may not always be the case...
         .range([0, width - margin.right])
 
     const xAxis = axisBottom(xScale).ticks(5);
 
-    let fullYDomain = []
-    let minY = Infinity;
-    let maxY = -Infinity;
-    for (let i=0; i < data.length; i++) {
-        let item = data[i].gdp5yearsData
-        for (let j=0; j<item.length; j++) {
-            fullYDomain.push(item[j].gdpValue)
-
-            if (item[j].gdpValue < minY) {
-                minY = item[j].gdpValue
-            }
-
-            if (item[j].gdpValue > maxY) {
-                maxY = item[j].gdpValue
-            }
-        }
-    }
+    const fullYDomain = fullAxisDomain(data, 'gdp5yearsData', 'gdpValue')
+    const [minY, maxY] = domainMinAndMax(fullYDomain)
 
     const yScale  = scaleLinear()
         .domain([minY, maxY])
@@ -60,7 +47,6 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
     let color = scaleOrdinal(schemeCategory10);
 
     let myline = line()
-        // TODO: Note the syntax change. The code below wouldn't work, if we only sued the {} without the return keyword!
         .x((d) => {return xScale(d.year)})
         .y((d) => {return yScale(d.gdpValue)});
 
