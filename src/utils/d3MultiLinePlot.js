@@ -35,7 +35,7 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
     const [minY, maxY] = domainMinAndMax(fullYDomain)
 
     const yScale  = scaleLinear()
-        .domain([minY, maxY])
+        .domain([minY, maxY+2])
         .range([height - margin.bottom, margin.top]) // it's inverted bc we always start from top left, then going downwards
 
     const yAxis = axisLeft(yScale).ticks(5);
@@ -71,15 +71,6 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
         .style('stroke', (d, i) => color(i))
         .attr('fill', 'none')
 
-    // lines.selectAll('.line-group')
-    //     .append("text")
-    //     .attr("class", "title-text")
-    //     .style("fill", (d, i) => color(i))
-    //     .text((d) => d.countryName)
-    //     .attr("text-anchor", "middle")
-    //     .attr("x", (width-margin)/2)
-    //     .attr("y", 5)
-
 //     add legend
     const countryLabels = data.map(d => d.countryName)
     svg.selectAll("legend-dots")
@@ -87,7 +78,7 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
         .enter()
         .append("circle")
         .attr("cx", width-100) //was 100
-        .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+        .attr("cy", function(d,i){ return i*25}) // 0 is where the first dot appears. 25 is the distance between dots
         .attr("r", 4)
         .style("fill", function(d,i){ return color(i)})
 
@@ -97,7 +88,7 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
         .enter()
         .append("text")
         .attr("x", width-180) //was 120
-        .attr("y", function(d,i){ return 105 + i*25}) // 105 is where the first dot appears. 25 is the distance between dots
+        .attr("y", function(d,i){ return 5 + i*25}) // 105 is where the first dot appears. 25 is the distance between dots
         .style("fill", function(d, i){ return color(i)})
         .text(function(d){ return d})
         .attr("text-anchor", "left")
