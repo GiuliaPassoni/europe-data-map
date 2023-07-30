@@ -1,8 +1,7 @@
 import {axisBottom, axisLeft, max, scaleBand, scaleLinear} from "d3";
 import {initialiseSvg} from "./calcs";
 export function d3barChart(myRef,width, height, data, margin) {
-    let svg = initialiseSvg('#barChartSvgContainer', 'barChartSvg', myRef, width, height)
-    svg.attr('style', 'background: aliceblue; margin-bottom: 20px; border: 2px solid red;')
+    let svg = initialiseSvg('#barChartSvgContainer', 'barChartSvg', myRef, width, height, margin)
 
     // Add X axis
     const x = scaleBand()
@@ -26,8 +25,10 @@ export function d3barChart(myRef,width, height, data, margin) {
         .attr("transform", `translate(${margin.left},0)`)
         .call(axisLeft(y))
         // to remove the vertical axis line:
-        .call((g) => {
-            g.select(".domain").remove()})})
+        // .call((g) => {
+        //     g.select(".domain").remove()
+        // })
+    })
 
     function parsedX(item) {
         const r = x(item)
