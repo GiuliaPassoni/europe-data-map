@@ -2,19 +2,15 @@ import * as d3 from "d3"
 import {
     axisBottom,
     axisLeft,
-    curveLinear,
     line,
     scaleLinear,
     select,
-    group,
     extent,
-    timeParse,
-    scaleTime,
     scaleOrdinal,
     schemeCategory10,
     max
 } from "d3";
-import {domainMinAndMax, domainWithMinAndMax, fullAxisDomain} from "./calcs";
+import {domainMinAndMax, fullAxisDomain} from "./calcs";
 
 export function d3MultiLineChart(myRef, width, height, margin, data, variableName) {
 
@@ -31,7 +27,7 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
     const [minX, maxX] = domainMinAndMax(fullXDomain)
     const xScale = scaleLinear()
         .domain(extent(data[0].gdp5yearsData, d => d.year)) //this here works, because the X values are the same for all entries. But that may not always be the case...
-        .range([0, width - margin.right])
+        .range([0, width - margin.right - margin.left])
 
     const xAxis = axisBottom(xScale).ticks(5);
 
@@ -44,12 +40,24 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
 
     const yAxis = axisLeft(yScale).ticks(5);
 
-    let color = scaleOrdinal(schemeCategory10);
-
     let myline = line()
         .x((d) => {return xScale(d.year)})
         .y((d) => {return yScale(d.gdpValue)});
 
+    // attach axes
+    svg.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${height-margin.bottom})`)
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis);
+
+    // line colours
+    let color = scaleOrdinal(schemeCategory10);
+
+    // draw lines
     let lines = svg.append('g')
         .attr('class', 'lines');
 
@@ -63,12 +71,35 @@ export function d3MultiLineChart(myRef, width, height, margin, data, variableNam
         .style('stroke', (d, i) => color(i))
         .attr('fill', 'none')
 
-    svg.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${height-margin.bottom})`)
-        .call(xAxis);
+    // lines.selectAll('.line-group')
+    //     .append("text")
+    //     .attr("class", "title-text")
+    //     .style("fill", (d, i) => color(i))
+    //     .text((d) => d.countryName)
+    //     .attr("text-anchor", "middle")
+    //     .attr("x", (width-margin)/2)
+    //     .attr("y", 5)
 
-    svg.append("g")
-        .attr("class", "y-axis")
-        .call(yAxis);
+//     add legend
+    const countryLabels = data.map(d => d.countryName)
+    svg.selectAll("legend-dots")
+        .data(countryLabels)
+        .enter()
+        .append("circle")
+        .attr("cx", width-100) //was 100
+        .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+        .attr("r", 4)
+        .style("fill", function(d,i){ return color(i)})
+
+// Add one dot in the legend for each name.
+    svg.selectAll("legend-labels")
+        .data(countryLabels)
+        .enter()
+        .append("text")
+        .attr("x", width-180) //was 120
+        .attr("y", function(d,i){ return 105 + i*25}) // 105 is where the first dot appears. 25 is the distance between dots
+        .style("fill", function(d, i){ return color(i)})
+        .text(function(d){ return d})
+        .attr("text-anchor", "left")
+        .style("alignment-baseline", "middle")
 }
