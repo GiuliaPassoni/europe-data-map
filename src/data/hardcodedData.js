@@ -28,7 +28,7 @@ export const hardcodedData = [
         eurovisionWins: 3
     },{
         countryName: 'country4',
-        gdp: -1.0,
+        gdp: -.8,
         gdp5yearTrend: randomArray(1.2,3.3, 5).map((i, ix) => ({year: randomYears[ix], gdpValue: i})),
         population: 500000,
         averageLifespan: 81,

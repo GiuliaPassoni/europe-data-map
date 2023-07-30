@@ -1,4 +1,4 @@
-import {axisBottom, axisLeft, max, scaleBand, scaleLinear} from "d3";
+import {axisBottom, axisLeft, extent, max, scaleBand, scaleLinear} from "d3";
 import {initialiseSvg} from "./calcs";
 export function d3barChart(myRef,width, height, data, margin) {
     let svg = initialiseSvg('#barChartSvgContainer', 'barChartSvg', myRef, width, height, margin)
@@ -16,7 +16,7 @@ export function d3barChart(myRef,width, height, data, margin) {
 
     // Add Y axis
     const y = scaleLinear()
-        .domain([0, Math.max(...data.map(({ gdp }) => gdp))])
+        .domain([Math.min(...data.map(({ gdp }) => gdp)), Math.max(...data.map(({ gdp }) => gdp))])
         // .domain([0, max(data, d => d.gdp)]).nice()
         .range([height - margin.bottom, margin.top])
 
@@ -45,8 +45,15 @@ export function d3barChart(myRef,width, height, data, margin) {
         .data(data)
         .join("rect")
         .attr("x", d => parsedX(d.countryName))
-        .attr("y", d => y(d.gdp))
-        .attr("height", d => y(0) - y(d.gdp))
+        .attr("y", d => d.gdp > 0 ?
+            y(Math.abs(d.gdp))
+            : y(0)
+        )
+        .attr("height",
+                d => d.gdp > 0 ?
+                    y(0) - y(d.gdp)
+                    : y(0) - y(-d.gdp)
+        )
         .attr("width", x.bandwidth());
 
     svg.append("g")
