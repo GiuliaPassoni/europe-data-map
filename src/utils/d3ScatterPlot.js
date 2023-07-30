@@ -1,32 +1,35 @@
-import {axisBottom, axisLeft, scaleLinear} from "d3";
-import {initialiseSvg} from "./calcs";
+import {axisBottom, axisLeft, extent, scaleBand, scaleLinear} from "d3";
+import {fullAxisDomain, initialiseSvg} from "./calcs";
 
-export function d3ScatterPlot(svgRef, width, height, dataset){
-    let svg = initialiseSvg('#scatterPlotSvgContainer', 'scatterPlotSvg', svgRef, width, height)
-    svg.attr('style', 'background: aliceblue; margin-bottom: 20px')
-
+export function d3ScatterPlot(svgRef, width, height, data, margin){
+    let svg = initialiseSvg('#scatterPlotSvgContainer', 'scatterPlotSvg', svgRef, width, height, margin)
+console.log(data)
 // Add X axis
-    const x = scaleLinear().domain([0, 6]).range([0, width]);
+    const x = scaleBand()
+        .domain(data.map(d => d.countryName))
+        .range([margin.left, width - margin.right]);
     const xAxis = svg
         .append("g")
-        .attr("transform", `translate(0, ${height-100})`)
-        .call(axisBottom(x));
+        .attr("transform", `translate(0, ${height-margin.bottom})`)
+        .call(axisBottom(x).ticks(5));
 
     // Add Y axis
-    const y = scaleLinear().domain([0, 100]).range([height, 0]);
-    svg.append("g").attr("transform", `translate(${height-100},0)`).call(axisLeft(y));
+    const y = scaleLinear()
+        .domain([0, Math.max(...data.map(({ averageLifespan }) => averageLifespan))])
+        .range([height - margin.bottom, margin.top]);
+    svg.append("g").attr("transform", `translate(${margin.left},0)`).call(axisLeft(y));
 
     // Add dots
     svg.append("g")
         .selectAll("circle")
-        .data(dataset)
+        .data(data)
         .join("circle")
         .attr("cx", d => {
-            return x(d[0]);
+            return x(d.countryName);
         })
         .attr("cy", d => {
-            return y(d[1]/2);
+            return y(d.averageLifespan);
         })
-        .attr("r", 15)
+        .attr("r", 7)
         .attr('fill', 'black');
 }
