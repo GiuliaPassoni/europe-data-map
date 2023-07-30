@@ -12,7 +12,7 @@ import {
 } from "d3";
 import {domainMinAndMax, fullAxisDomain} from "./calcs";
 
-export function d3MultiLineChart(myRef, width, height, margin, data, variableName) {
+export function d3MultiLineChart(myRef, width, height, margin, data) {
 
     // create basic svg
     const svg = select(myRef)
