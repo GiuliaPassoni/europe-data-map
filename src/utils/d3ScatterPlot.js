@@ -7,11 +7,12 @@ console.log(data)
 // Add X axis
     const x = scaleBand()
         .domain(data.map(d => d.countryName))
-        .range([margin.left, width - margin.right]);
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
     const xAxis = svg
         .append("g")
         .attr("transform", `translate(0, ${height-margin.bottom})`)
-        .call(axisBottom(x).ticks(5));
+        .call(axisBottom(x).tickSizeOuter(0));
 
     // Add Y axis
     const y = scaleLinear()
@@ -25,7 +26,7 @@ console.log(data)
         .data(data)
         .join("circle")
         .attr("cx", d => {
-            return x(d.countryName);
+            return margin.left/2 + x(d.countryName);
         })
         .attr("cy", d => {
             return y(d.averageLifespan);

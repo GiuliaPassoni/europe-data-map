@@ -19,7 +19,7 @@ export function ScatterPlot(){
     useEffect(()=>{
         if(!initialised){
             initialised = true
-            d3ScatterPlot(svgRef.current, 500,500, countryLifeSpanData, margin)
+            d3ScatterPlot(svgRef.current, 500,300, countryLifeSpanData, margin)
         }
     },[initialised])
     return (
