@@ -21,7 +21,7 @@ export function BarChart(){
     useEffect(() => {
     if(!initialised) {
         initialised = true
-        d3barChart(svgRef.current, 800, 500, gdpData, margin)
+        d3barChart(svgRef.current, 500, 300, gdpData, margin)
     }
     },[initialised])
     return(
