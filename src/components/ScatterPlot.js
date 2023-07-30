@@ -5,9 +5,13 @@ import {d3ScatterPlot} from "../utils/d3ScatterPlot";
 
 const countryLifeSpanData = []
 for(let i=0; i<hardcodedData.length;i++){
-    countryLifeSpanData.push([i+1, hardcodedData[i]["averageLifespan"]])
+    // countryLifeSpanData.push([i+1, hardcodedData[i]["averageLifespan"]])
+    countryLifeSpanData.push({
+        countryName: hardcodedData[i].countryName,
+        averageLifespan: hardcodedData[i].averageLifespan
+    })
 }
-
+const margin = {top: 10, right: 30, bottom: 30, left: 60}
 export function ScatterPlot(){
     const svgRef = useRef(null)
     let initialised = false
@@ -15,7 +19,7 @@ export function ScatterPlot(){
     useEffect(()=>{
         if(!initialised){
             initialised = true
-            d3ScatterPlot(svgRef.current, 800,500, countryLifeSpanData)
+            d3ScatterPlot(svgRef.current, 500,500, countryLifeSpanData, margin)
         }
     },[initialised])
     return (
