@@ -47,13 +47,15 @@ export function domainMinAndMax(fullDomain){
     return [min, max]
 }
 
-export function initialiseSvg(anchorElementName, svgId, svgRef, width, height) {
+export function initialiseSvg(anchorElementName, svgId, svgRef, width, height, margin) {
     return select(anchorElementName)
         .append('svg')
         .attr('id', svgId)
         .attr('width', width)
         .attr('height', height)
         .attr('ref', svgRef)
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")")
 }
 
 //for now, ref will have to be assigned separately, upon initialisation
